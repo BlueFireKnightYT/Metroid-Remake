@@ -38,11 +38,11 @@ public class Shooting : MonoBehaviour
     {
         if (context.performed)
         { 
-            if (currentSp = spLeft)
+            if (currentSp == spLeft)
             {
                 Debug.Log("Left");
             }
-            else if (currentSp = spRight)
+            else if (currentSp == spRight)
             {
                 Debug.Log("Right");
             }

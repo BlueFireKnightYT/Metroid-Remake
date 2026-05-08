@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class moveLR : MonoBehaviour
 {
     Rigidbody2D rb;
-    float moveSpeed = 4f;
+    public float moveSpeed = 4f;
     Vector2 moveInput;
 
     BoxCollider2D standingColl;
