@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Collisions
+  - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX

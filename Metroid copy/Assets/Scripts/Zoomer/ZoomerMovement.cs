@@ -2,42 +2,47 @@ using UnityEngine;
 
 public class ZoomerMovement : MonoBehaviour
 {
-    [SerializeField] Transform raycastPos;
-    [SerializeField] float moveSpeed;
-    [SerializeField] float rayLen;
-
-    private int directionIndex = 0;
-
-    bool up, down, left, right = true;
-    Vector3 moveVector;
+    public bool inverted;
+    public float moveSpeed = 2f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float rayLength = 0.5f;
 
     void FixedUpdate()
     {
-        RaycastHit2D downCast = Physics2D.Raycast(raycastPos.position, -transform.up, rayLen);
-        Debug.DrawRay(raycastPos.position, -transform.up * rayLen, Color.red);
+        float direction = inverted ? -1f : 1f;
 
-        if (downCast.collider == null)
+        transform.Translate(Vector3.right * moveSpeed * direction * Time.fixedDeltaTime, Space.Self);
+
+        Vector2 forwardDir = (Vector2)transform.right * direction;
+        Vector2 downDir = -transform.up;
+
+        RaycastHit2D wallHit = Physics2D.Raycast(transform.position, forwardDir, rayLength, groundLayer);
+
+        Vector2 edgeCheckOrigin = (Vector2)transform.position + (forwardDir * 0.2f);
+        RaycastHit2D floorHit = Physics2D.Raycast(edgeCheckOrigin, downDir, rayLength, groundLayer);
+
+        Debug.DrawRay(transform.position, forwardDir * rayLength, Color.green);
+        Debug.DrawRay(edgeCheckOrigin, downDir * rayLength, Color.red);
+
+        if (wallHit.collider != null)
         {
-            RotateAndCycle();
+            transform.up = wallHit.normal;
+            transform.position = wallHit.point + (wallHit.normal * 0.25f);
+            transform.Rotate(0, 0, 90f * direction);
+            return;
         }
 
-        if (right) moveVector = Vector3.right;
-        else if (up) moveVector = Vector3.up;
-        else if (left) moveVector = Vector3.left;
-        else if (down) moveVector = Vector3.down;
+        if (floorHit.collider == null)
+        {
+            transform.Translate(Vector3.right * 0.25f * direction, Space.Self);
+            transform.Rotate(0, 0, -90f * direction);
 
-        transform.position += moveVector * moveSpeed * Time.fixedDeltaTime;
-    }
-
-    void RotateAndCycle()
-    {
-        transform.Rotate(0, 0, 90f);
-
-        directionIndex = (directionIndex + 1) % 4;
-
-        right = (directionIndex == 0);
-        up = (directionIndex == 1);
-        left = (directionIndex == 2);
-        down = (directionIndex == 3);
+            RaycastHit2D realignHit = Physics2D.Raycast(transform.position, -transform.up, rayLength * 2f, groundLayer);
+            if (realignHit.collider != null)
+            {
+                transform.up = realignHit.normal;
+                transform.position = realignHit.point + (realignHit.normal * 0.25f);
+            }
+        }
     }
 }

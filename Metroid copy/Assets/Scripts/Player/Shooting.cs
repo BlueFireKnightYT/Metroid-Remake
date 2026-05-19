@@ -10,6 +10,10 @@ public class Shooting : MonoBehaviour
     public GameObject spRight;
     public GameObject spUp;
 
+    [SerializeField] float bulletSpeed;
+    [SerializeField] GameObject bulletPrefab;
+    GameObject thisBullet;
+
     GameObject currentSp;
 
     private void Start()
@@ -41,15 +45,28 @@ public class Shooting : MonoBehaviour
             if (currentSp == spLeft)
             {
                 Debug.Log("Left");
+                thisBullet = Instantiate(bulletPrefab, currentSp.transform.position, Quaternion.identity);
+                bulletScript bs = thisBullet.GetComponent<bulletScript>();
+                bs.bulletSpeedX = -bulletSpeed;
             }
             else if (currentSp == spRight)
             {
                 Debug.Log("Right");
+                thisBullet = Instantiate(bulletPrefab, currentSp.transform.position, Quaternion.identity);
+                bulletScript bs = thisBullet.GetComponent<bulletScript>();
+                bs.bulletSpeedX = bulletSpeed;
             }
             else
             {
                 Debug.Log("Up");
+                thisBullet = Instantiate(bulletPrefab, currentSp.transform.position, Quaternion.identity);
+                bulletScript bs = thisBullet.GetComponent<bulletScript>();
+
+                bs.bulletSpeedY = bulletSpeed;
             }
+
+            Destroy(thisBullet, .2f);
+            
         }
     }
 }
