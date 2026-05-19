@@ -20,6 +20,7 @@ public class PlayerHP : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             currentHP -= 8;
+            hpText.text = currentHP.ToString();
 
             if (currentHP <= 0)
                 SceneManager.LoadScene("Level1");
