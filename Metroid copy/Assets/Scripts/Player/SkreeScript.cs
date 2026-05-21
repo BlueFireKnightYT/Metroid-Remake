@@ -15,7 +15,15 @@ public class SkreeScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Collisions"))
+        { 
         isAttacking = false;
         Destroy(this.gameObject, 2);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 }

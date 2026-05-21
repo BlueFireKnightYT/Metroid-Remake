@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2777299397106497948}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Raycast pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 7595020813235296961}
   - component: {fileID: 5818129030075829670}
   - component: {fileID: 2405851756388558933}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Zoomer yellow
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -227,5 +227,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   maxHP: 20
   bulletDMG: 10
-  hpPickup: {fileID: 0}
+  hpPickup: {fileID: 947687350114060262, guid: f63ceb63c25595e4ba07bae99ce0a5e1, type: 3}
   deathExplosion: {fileID: 2438355601788323451, guid: 918a811923804f34db3de18935e59e80, type: 3}

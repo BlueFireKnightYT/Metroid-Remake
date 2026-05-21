@@ -30,12 +30,10 @@ public class EnemyHP : MonoBehaviour
             {
                 float HPSpawnChance = Random.Range(0, 6);
                 if (HPSpawnChance == 0)
-                { 
-                    //Instantiate(hpPickup, transform.position, Quaternion.identity);
+                {
+                    Instantiate(hpPickup, transform.position, Quaternion.identity);
                     Debug.Log("HP");
                 }
-
-                Instantiate(deathExplosion, transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
             }
             else
@@ -55,5 +53,10 @@ public class EnemyHP : MonoBehaviour
         sr.color = Color.white;
         move.moveSpeed = ogMoveSpeed;
         canBeHit = true;
+    }
+
+    private void OnDestroy()
+    {
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
     }
 }

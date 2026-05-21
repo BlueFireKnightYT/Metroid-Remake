@@ -12,6 +12,8 @@ public class moveLR : MonoBehaviour
 
     public bool rollingUnlocked = false;
     public bool isRolling = false;
+    public bool isStunned = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -23,7 +25,8 @@ public class moveLR : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocityY);
+        float targetX = isStunned ? rb.linearVelocityX : moveInput.x * moveSpeed;
+        rb.linearVelocity = new Vector2(targetX, rb.linearVelocityY);
     }
 
     public void Move(InputAction.CallbackContext context)
